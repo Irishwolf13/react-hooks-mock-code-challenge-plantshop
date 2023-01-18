@@ -25,12 +25,18 @@ function PlantPage() {
   const handleSearchInput = (e) => {
     setSearchInput(e.target.value)
   }
-  
+  const handleDelete = (objectID) => {
+    fetch(`http://localhost:6001/plants/${objectID}`, {
+      method: "DELETE"
+    })
+    .then(response => response.json())
+    .then(myCard => setRawData(rawData.filter(item => item.id !== objectID)));
+  }
   return (
     <main>
       <NewPlantForm addToBackEnd={addToBackEnd} />
       <Search handleSearchInput={handleSearchInput} searchInput={searchInput}/>
-      <PlantList rawData={ rawData } searchInput={searchInput}/>
+      <PlantList rawData={ rawData } searchInput={searchInput} handleDelete={handleDelete}/>
     </main>
   );
 }
